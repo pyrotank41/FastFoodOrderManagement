@@ -34,10 +34,14 @@ void doAdd(NODE**  head, NODE** tail) {
         return;
     }
 
-    printf("Adding In-restaurant order for \"%s\": %d burgers and %d salads\n", name, NumBurgers, NumSalads);
-
     // add code to perform this operation here
-    if(!doesNameExist(*head, name)) addToList(head, tail, name, NumBurgers, NumSalads, FALSE);
+    if(!doesNameExist(*head, name)) {
+        printf("Adding In-restaurant order for \"%s\": %d burgers and %d salads\n", name, NumBurgers, NumSalads);
+        addToList(head, tail, name, NumBurgers, NumSalads, FALSE);
+    }
+    else{
+        printf("Error: \"%s\" exists in the list\n", name);
+    }
 }
 
 void doCallAhead(NODE** head, NODE** tail) {
@@ -74,13 +78,17 @@ void doCallAhead(NODE** head, NODE** tail) {
         return;
     }
 
-    printf("Adding Call-ahead order for \"%s\": %d burgers and %d salads\n", name, NumBurgers, NumSalads);
-
     // add code to perform this operation here
-    if(!doesNameExist(*head, name)) addToList(head, tail, name, NumBurgers, NumSalads, TRUE);
+    if(!doesNameExist(*head, name)) {
+        printf("Adding Call-ahead order for \"%s\": %d burgers and %d salads\n", name, NumBurgers, NumSalads);
+        addToList(head, tail, name, NumBurgers, NumSalads, TRUE);
+    }
+    else{
+        printf("Error: \"%s\" exists in the list\n", name);
+    }
 }
 
-void doWaiting() {
+void doWaiting(NODE* head) {
     /* get order name from input */
     char * name = getName();
     if (NULL == name) {
@@ -90,12 +98,12 @@ void doWaiting() {
         return;
     }
 
-    printf("Call-ahead order \"%s\" is now waiting in the restaurant\n", name);
-
     // add code to perform this operation here
+    if(updateStatus(head, name))
+        printf("Call-ahead order \"%s\" is now waiting in the restaurant\n", name);
 }
 
-void doRetrieve() {
+void doRetrieve(NODE** head, NODE** tail) {
     /* get info of prepared food ready on the counter from input */
     int PreparedBurgers = getPosInt();
     if (PreparedBurgers < 0) {
@@ -119,9 +127,16 @@ void doRetrieve() {
     printf("Retrieve (and remove) the first group that can pick up the order of %d burgers and %d salads\n", PreparedBurgers, PreparedSalads);
 
     // add code to perform this operation here
+    char * name = retrieveAndRemove(head, tail, PreparedBurgers, PreparedSalads);
+    if(strcmp(name,"-1") == 0) {
+        printf("Error: group with order of %d burgers and %d salads does not exists\n", PreparedBurgers, PreparedSalads);
+    }
+    else {
+        printf("Order complete for %s\n", name);
+    }
 }
 
-void doList() {
+void doList(NODE* head) {
     /* get order name from input */
     char * name = getName();
     if (NULL == name) {
@@ -131,19 +146,20 @@ void doList() {
         return;
     }
 
-    printf("Order for \"%s\" is behind the following orders\n", name);
-
     // add code to perform this operation here
+    displayOrdersAhead(head, name);
+
 }
 
-void doDisplay() {
+void doDisplay(NODE* head) {
     clearToEoln();
-    printf("Display information about all orders\n");
+    printf("Display information about all orders:\n");
 
     // add code to perform this operation here
+    displayListInformation(head);
 }
 
-void doEstimateTime() {
+void doEstimateTime(NODE* head) {
     /* get order name from input */
 
     char * name = getName();
@@ -155,5 +171,12 @@ void doEstimateTime() {
     }
 
     // add code to perform this operation here  
+    int time = displayWaitingTime(head, name);
+    if(time != -1){
+        printf("estimated weight time is %d min\n", time);
+    }
+    else{
+        printf("Error: \"%s\" does NOT exists in the list\n", name);
+    }
 
 }

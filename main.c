@@ -3,7 +3,6 @@
 // global variables.
 int debugMode = FALSE;
 
-
 /* forward definition of functions */
 void clearToEoln();
 
@@ -144,6 +143,10 @@ void printCommands() {
     clearToEoln();
 }
 
+boolean getDebug(){
+    return debugMode;
+}
+
 int main(int argc, char ** argv) {
 
     char * input;
@@ -177,15 +180,15 @@ int main(int argc, char ** argv) {
         } else if ('c' == ch) {
             doCallAhead(&head, &tail);
         } else if ('w' == ch) {
-            doWaiting();
+            doWaiting(head);
         } else if ('r' == ch) {
-            doRetrieve();
+            doRetrieve(&head, &tail);
         } else if ('l' == ch) {
-            doList();
+            doList(head);
         } else if ('d' == ch) {
-            doDisplay();
+            doDisplay(head);
         } else if ('t' == ch) {
-            doEstimateTime();
+            doEstimateTime(head);
         } else if ('\n' == ch) {
             /* nothing entered on input line     *
              * do nothing, but don't give error  */

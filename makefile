@@ -1,3 +1,6 @@
+debug:
+	./program.out -d
+
 run:
 	./program.out
 
