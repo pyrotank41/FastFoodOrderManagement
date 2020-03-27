@@ -1,3 +1,7 @@
+// author: karan singh kochar
+// project name: FastFoodOrderManagement
+// date: 27th march 2020
+
 #include "main.h"
 
 void _initNode(NODE** node, char * name, int numBurgers, int numSalads, boolean callAhead){
@@ -14,6 +18,7 @@ void _initNode(NODE** node, char * name, int numBurgers, int numSalads, boolean 
     *node = newNode;
 }
 
+// just for debug purposes
 // void _displayList(NODE* head, NODE* tail) {
 //     if(head!= NULL) {
 //         printf("\n**head at %s\n", head->name);
@@ -24,9 +29,7 @@ void _initNode(NODE** node, char * name, int numBurgers, int numSalads, boolean 
 //         }
 //         printf("\n**tail at %s\n", tail->name);
 //         printf("\n");
-        
-//     }
-    
+//     }   
 // }
 
 void _deleteNode(NODE** head, NODE** tail, NODE** prev, NODE** cur) {
@@ -123,6 +126,7 @@ char * retrieveAndRemove(NODE** head, NODE** tail, int numBurgers, int numSalads
         if( cur->numBurgers == numBurgers && cur->numSalads == numSalads){ // if group name is found
             char* name = cur->name;
             _deleteNode (head, tail, &prev, &cur);
+            // for debug purposes.
             // _displayList(*head, *tail);
             return name;
         }

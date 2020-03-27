@@ -1,3 +1,7 @@
+// author: karan singh kochar
+// project name: FastFoodOrderManagement
+// date: 27th march 2020
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
